@@ -23,12 +23,13 @@ function fire_ajax_submit() {
     $.ajax({
         type: 'post',
         contentType: 'application/json; charset=utf-8',
-        url: '/users',
+        url: '/users',//POST
         data: json,
         dataType: 'text',
         success: function (formArray) {
         	console.log("SUCCESS : ", formArray);
-        	window.location.href = "/users";
+        	window.location.href = "/users";//GET
+        	
         	
         },
         error: function (e) {

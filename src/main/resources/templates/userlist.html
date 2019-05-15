@@ -1,24 +1,30 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset=UTF-8>
+	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 </head>
 <body>
-<table>
-<thead>
-	<tr>
-		<th>번호</th><th>이름</th><th>회사</th>
-	</tr>
-</thead>
-<tbody>
-	<tr th:each="user : ${users}">
-		<td th:text="${user.id}">Id</td>
-		<td th:text="${user.name}">Id</td>
-		<td th:text="${user.company}">Id</td>
-	</tr>
-</tbody>
-</table>
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">NAME</th>
+				<th scope="col">COMPANY</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="user : ${users}">
+				<th scope="row"><span th:text="${user.id}"></span>
+				</td>
+				<td><span th:text="${user.name}"></span></td>
+				<td><span th:text="${user.company}"></span></td>
+			</tr>
+		</tbody>
+	</table>
 </body>
 </html>

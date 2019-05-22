@@ -19,7 +19,8 @@
 		</thead>
 		<tbody>
 			<tr th:each="user : ${users}">
-					<td><a th:href="@{user/}+${user.id}"><span th:text="${user.id}"></span></a></td>
+					<td><a th:href="@{/users/}+${user.id}"><span th:text="${user.id}"></span></a></td>
+					<!--  @{/users/{id}(id=${user.id})} 와 같음 -->
 					<td><span th:text="${user.name}"></span></td>
 					<td><span th:text="${user.company}"></span></td>
 

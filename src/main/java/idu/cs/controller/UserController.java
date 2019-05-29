@@ -78,12 +78,21 @@ public class UserController {
 		model.addAttribute("users", userRepo.findAll());
 		return "userlist";
 	}
+
+	@GetMapping("/user-update-form")
+	public String getUpdateUser(HttpSession session) {
+		return "update";
+	}
 	
-	@PostMapping("/users")
-	public String createUser(@Valid @RequestBody User user, Model model) {
-		userRepo.save(user);
-		model.addAttribute("users", userRepo.findAll());
-		return "redirect:/users";
+	@PostMapping("/update")
+	public String updateUser(@Valid User user, HttpSession session) {
+		if(userRepo.save(user)==null) {
+			return "redirect:/";
+		}
+		else {
+			session.setAttribute("user", user);
+		return "redirect:/userlist-form";
+		}
 	}
 
 	@PutMapping("/users/{id}") //@PatchMapping 수정한 필드만 고침
@@ -97,6 +106,27 @@ public class UserController {
 		userRepo.save(userDetails);
 		return "redirect:/users";
 	}
+	
+	
+	@PostMapping("/users")
+	public String createUser(@Valid @RequestBody User user, Model model) {
+		userRepo.save(user);
+		model.addAttribute("users", userRepo.findAll());
+		return "redirect:/users";
+	}
+/*
+	@PutMapping("/users/{id}") //@PatchMapping 수정한 필드만 고침
+	public String updateUser(@PathVariable(value = "id") Long userId, @Valid User userDetails, Model model) {
+		//System.out.println(userDetails.getName());
+		//userRepo.save();
+		//User user = userRepo.findById(userId).get(); 
+		// user는 DB로 부터 읽어온 객체
+		//user.setName(userDetails.getName()); // userDetails는 전송한 객체
+		//user.setCompany(userDetails.getCompany());
+		userRepo.save(userDetails);
+		return "redirect:/users";
+	}
+*/
 	
 	@DeleteMapping("/users/{id}")
 	public String deleteUser(@PathVariable(value = "id") Long userId, Model model) {

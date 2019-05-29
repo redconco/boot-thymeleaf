@@ -30,8 +30,6 @@ public class UserController {
 	
 	@GetMapping("/")
 	public String home(Model model) {
-		model.addAttribute("test", "인덕 컴소");
-		model.addAttribute("ksh", "고성환");
 		return "index";
 	}
 	
@@ -45,16 +43,22 @@ public class UserController {
 		User sessionUser = userRepo.findByUserId(user.getUserId());
 		if(sessionUser == null) {
 			System.out.println("id error" + user.getUserId());
-			return "redirect:/user_login-form";
+			return "redirect:/user-login-form";
 		}
 		if(!sessionUser.getUserPw().equals(user.getUserPw())) {
 			System.out.println("pw error" + user.getUserPw());
-			return "redirect:/user_login-form";
+			return "redirect:/user-login-form";
 		}
 		session.setAttribute("user", sessionUser);
 		return "redirect:/userlist-form";
 	}
-
+	@GetMapping("/user-logout")
+	public String logoutUser(HttpSession session) {
+		System.out.println("logout process");
+		session.removeAttribute("user");
+		//session.invalidate(); 모두 삭제
+		return "redirect:/";
+	}
 	@GetMapping("/user-regist-form") // 추가한거
 	public String getRegForm(Model model) {
 		return "register";

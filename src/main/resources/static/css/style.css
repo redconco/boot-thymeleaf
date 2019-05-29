@@ -2603,6 +2603,10 @@ ul {
   color: #000 !important;
 }
 
+.menu_fixed img {
+	
+}
+
 @media (max-width: 576px) {
   /* line 103, E:/170 Kanox Agency/170_Kanox_Agency_html/sass/_menu.scss */
   .navbar-light .navbar-toggler {

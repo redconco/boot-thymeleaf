@@ -24,7 +24,6 @@ public class User {
 	private String name;
 	private String company;
 	
-	
 	public Long getId() {
 		return id;
 	}

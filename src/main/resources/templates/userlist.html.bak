@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset=UTF-8>
+	<th:block th:include="fragments/header"></th:block>
+	<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:include="fragments/nav"></th:block>
+
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">이름</th>
+				<th scope="col">회사</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="user : ${users}">
+					<td><a th:href="@{/users/}+${user.id}"><span th:text="${user.id}"></span></a></td>
+					<!--  @{/users/{id}(id=${user.id})} 와 같음 -->
+					<td><span th:text="${user.name}"></span></td>
+					<td><span th:text="${user.company}"></span></td>
+
+			</tr>
+		</tbody>
+	</table>
+	
+<th:block th:include="fragments/footer"></th:block>
+</body>
+</html>

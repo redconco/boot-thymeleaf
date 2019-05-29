@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Index Page</title>
+	<th:block th:include="fragments/header"></th:block>
+	<script type="text/javascript" src="js/main.js"></script>
+</head>
+
+<body>
+
+<th:block th:include="fragments/nav"></th:block>
+
+<div class="container" style="min-height: 500px">
+
+    <div class="starter-template">
+        
+        <h1>첫 화면</h1>
+
+    </div>
+
+</div>
+
+<th:block th:include="fragments/footer"></th:block>
+
+</body>
+</html>

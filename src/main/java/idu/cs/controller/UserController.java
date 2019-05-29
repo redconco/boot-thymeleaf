@@ -2,6 +2,7 @@ package idu.cs.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -18,8 +19,13 @@ import idu.cs.domain.User;
 import idu.cs.exception.ResourceNotFoundException;
 import idu.cs.repository.UserRepository;
 
+
 @Controller
-public class HomeController {
+/* @Controller, @Service, @Repository 모르면 @Component로 Bean 객체를 사용한다고 알림
+ * Spring Framework에게 이 클래스로 부터 작성된 객체는 Controller 역할을 함을 알려줌
+ * Spring 이 이 클래스로 부터 Bean 객체를 생성해서 등록할 수 있음
+ * */
+public class UserController {
 	@Autowired UserRepository userRepo; // Dependency Injection
 	
 	@GetMapping("/")
@@ -29,12 +35,41 @@ public class HomeController {
 		return "index";
 	}
 	
-	@GetMapping("/user-reg-form") // 추가한거
+	@GetMapping("/user-login-form") // 추가한거
+	public String getLoginForm(Model model) {
+		return "login";
+	}
+	@PostMapping("/login")
+	public String loginUser(@Valid User user, HttpSession session) {
+		System.out.println("login process" + user.getUserId());
+		User sessionUser = userRepo.findByUserId(user.getUserId());
+		if(sessionUser == null) {
+			System.out.println("id error" + user.getUserId());
+			return "redirect:/user_login-form";
+		}
+		if(!sessionUser.getUserPw().equals(user.getUserPw())) {
+			System.out.println("pw error" + user.getUserPw());
+			return "redirect:/user_login-form";
+		}
+		session.setAttribute("user", sessionUser);
+		return "redirect:/userlist-form";
+	}
+
+	@GetMapping("/user-regist-form") // 추가한거
 	public String getRegForm(Model model) {
-		return "form";
+		return "register";
+	}
+	@PostMapping("/regist")
+	public String registUser(@Valid User user, Model model) {
+		if(userRepo.save(user)==null) {
+			return "redirect:/user-regist-form";
+		}
+		model.addAttribute("users", userRepo.findAll());
+		return "redirect:/userlist-form";
 	}
 	
-	@GetMapping("/users")
+	
+	@GetMapping("/userlist-form")
 	public String getAllUser(Model model) {
 		model.addAttribute("users", userRepo.findAll());
 		return "userlist";

@@ -6974,8 +6974,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 40px;
   border: none;
   outline: none;
-  background: #099;
-  color:#fff;
+  background: #f9f9ff;
   padding: 0 20px;
 }/*#f9f9ff;*/
 
@@ -6987,6 +6986,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .readonly {
 	background: #078;
+  color:#fff;
 }
 
 /* line 528, E:/170 Kanox Agency/170_Kanox_Agency_html/sass/_elements.scss */

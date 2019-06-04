@@ -91,7 +91,7 @@ public class UserController {
 		}
 		else {
 			session.setAttribute("user", user);
-		return "redirect:/userlist-form";
+			return "redirect:/userlist-form";
 		}
 	}
 

@@ -87,6 +87,31 @@ public class UserController {
 		// get 방식으로 해당 url에 재지정함
 	}
 	
+	@GetMapping("/user-update-form")
+	public String getUpdateUser(Model model, HttpSession session) {
+		// 서비스를 통해 Repository로 부터 정보를 가져와야 하나 세션에 저장해둔 정보를 활용
+		User user = (User) session.getAttribute("user");
+		user = userService.getUserById(user.getId());
+		model.addAttribute("user", user);
+		return "info";
+	}
+
+	@PutMapping("/users/{id}") //@PatchMapping 수정한 필드만 고침
+	public String updateUser(@PathVariable(value = "id") Long id, @Valid User updateUser, HttpSession session) {
+		/*
+		 * updateUser 객체 입력 폼 내용 : id 값이 없음,
+		 */
+		User user = userService.getUserById(id);
+		System.out.println(user);
+		user.setUserPw(updateUser.getUserPw());
+		user.setName(updateUser.getName());
+		user.setCompany(updateUser.getCompany());
+		// user는 DB로 부터 읽어온 객체
+		userService.saveUser(user);
+		session.setAttribute("user", user);
+		return "redirect:/users";
+	}
+	
 	
 	/*
 	@PostMapping("/regist")
@@ -96,12 +121,6 @@ public class UserController {
 		}
 		model.addAttribute("users", userRepo.findAll());
 		return "redirect:/userlist-form";
-	}
-	
-
-	@GetMapping("/user-update-form")
-	public String getUpdateUser(HttpSession session) {
-		return "update";
 	}
 	
 	@PostMapping("/update")
@@ -115,18 +134,6 @@ public class UserController {
 		}
 	}
 
-	@PutMapping("/users/{id}") //@PatchMapping 수정한 필드만 고침
-	public String updateUser(@PathVariable(value = "id") Long userId, @Valid UserEntity userDetails, Model model) {
-		//System.out.println(userDetails.getName());
-		//userRepo.save();
-		User user = userRepo.findById(userId).get(); 
-		// user는 DB로 부터 읽어온 객체
-		user.setName(userDetails.getName()); // userDetails는 전송한 객체
-		user.setCompany(userDetails.getCompany());
-		userRepo.save(userDetails);
-		return "redirect:/users";
-	}
-	
 	
 
 	@PutMapping("/users/{id}") //@PatchMapping 수정한 필드만 고침
